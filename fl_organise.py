@@ -49,14 +49,15 @@ def mk_dir(fl_dir):
 #-look for mp3 or wav in root folder, move matching exports into new project folder
 def file_move(fl_dir):
     file_types = ("*.mp3", "*.wav")
-    for audio_file in fl_dir.glob(file_types):
-        #check if audiofile starts with tbe name (eg v2)
-        target_folder = audio_dir./flp_file.stem
-        
-        if audio_file.stem.startswith(target_folder)and target_folder.is_dir():
-            shutil.move(flp_file, target_folder/flp_file.name)
+    for types in file_types:
+        for audio_file in fl_dir.glob(types):
+            #check if audiofile starts with tbe name (eg v2)
+            target_folder = fl_dir / audio_file.stem
+        #use str.startwith and path.name instead of pathobject(causes typeerror)
+        if audio_file.stem.startswith(target_folder.name) and target_folder.is_dir():
+            shutil.move(audio_file, target_folder/audio_file.name)
         else:
-            print(f"{flp_file.stem} Folder was not found")
+            print(f"{audio_file.stem} Folder was not found")
 
 #Copy Related audio
 #-create audio sub folder inside new project folder
