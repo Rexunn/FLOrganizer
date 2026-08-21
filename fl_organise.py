@@ -41,7 +41,8 @@ def mk_dir(fl_dir):
         if not target_folder.is_dir():
             #- if not create using mkdir and move flp inside
             print(f"{flp_file.stem} Folder not found, Creating missing folder")
-            #target_folder.mkdir(exist_ok = true) # double check folder doesn't exist b4 making it
+            target_folder.mkdir(exist_ok = true) # double check folder doesn't exist b4 making it
+            shutil.move(flp_file, target_folder/flp_file.name)
         else:
             print(f"{flp_file.stem} Folder alr exists")
 
@@ -53,8 +54,8 @@ def file_move(fl_dir):
         for audio_file in fl_dir.glob(types):
             #check if audiofile starts with tbe name (eg v2)
             target_folder = fl_dir / audio_file.stem
-        #use str.startwith and path.name instead of pathobject(causes typeerror)
-        if audio_file.stem.startswith(target_folder.name) and target_folder.is_dir():
+            #use str.startwith and path.name instead of pathobject(causes typeerror)
+            if audio_file.stem.startswith(target_folder.name) and target_folder.is_dir():
             shutil.move(audio_file, target_folder/audio_file.name)
         else:
             print(f"{audio_file.stem} Folder was not found")
