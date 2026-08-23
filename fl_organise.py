@@ -59,9 +59,40 @@ def file_move(fl_dir):
                     shutil.move(audio_file, target_folder/audio_file.name)
 
 #Copy Related audio
-def copy_audio(): # what would i need to feed into this?
-
+def copy_audio(fl_dir): # what would i need to feed into this?
+#defire path for unsorted quarantine
+quarantine = path(fl_dir/"Manual-Review")
+#loop through recoridngs + get st_mtime modification time of recordings
+#fl_dir.glob("*/*.flp") as it's directly 1 folder in
+for audio in fl_dir.glob("*/Audio/*.mp3"):
+    #modification time
+    mod_time = audio.stat().st_mtime
+    matching = []
+    #loop through flp files + get st_mtime of flp files
+    for flps in fl_dir.glob("*/*.flp"):
+        flp_time = flps.stat().st_mtime
+        #86400 = 24hrs
+        time_diff = abs(mod_time - flp_time)
+        if time_diff < 86400:
+            matching.append(flps)
+    if len(matching) == 1:
+        #copy audio to flp folder
+        audio_folder = matching[0].parent / "Audio"
+        audio_folder.mkdir(exist_ok = True)
+        shutil.copy2(audio, audio_folder/audio.name)
+    else:
+        #move to quarantine
+        flp_date_groups = []
+        for flp in matching:
+            #convert mod time to date string
+            #make sub dir in quarantine with date string as name
+        print(f"Moving {audio.name} to quarantine")
+#how many flps modified
+#if 1 make new audio subfolder in flp folder
+#if >2 or 0 move to quarantine
+#use shutil.copy2() to save metadata
 fl_dir = dir_finder()
 dir_scan(fl_dir)
 mk_dir(fl_dir)
 file_move(fl_dir)
+#copy_audio(fl_dir)
