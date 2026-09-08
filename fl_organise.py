@@ -61,7 +61,7 @@ def file_move(fl_dir):
 #Copy Related audio
 def copy_audio(fl_dir): # what would i need to feed into this?
 #defire path for unsorted quarantine
-quarantine = path(fl_dir/"Manual-Review")
+quarantine = Path(fl_dir/"Manual-Review")
 #loop through recoridngs + get st_mtime modification time of recordings
 #fl_dir.glob("*/*.flp") as it's directly 1 folder in
 for audio in fl_dir.glob("*/Audio/*.mp3"):
@@ -86,7 +86,7 @@ for audio in fl_dir.glob("*/Audio/*.mp3"):
         for flp in matching:
             #convert mod time to date string
             #make sub dir in quarantine with date string as name
-        print(f"Moving {audio.name} to quarantine")
+            print(f"Moving {audio.name} to quarantine")
 #how many flps modified
 #if 1 make new audio subfolder in flp folder
 #if >2 or 0 move to quarantine
