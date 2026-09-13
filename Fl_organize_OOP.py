@@ -19,7 +19,7 @@ class FLOrganizer:
         print("---Accessing Projects---")
         dir_list = list(self.root_dir.glob("*.flp"))
         print ("[+] Found: ")
-        for flp_file in self.root_dir.glob("*.flp"):
+        for flp_file in dir_list:
             print(flp_file.name)
             #store direct path to flp
             self.projects[flp_file.name] = flp_file
